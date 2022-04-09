@@ -1,0 +1,38 @@
+{
+  "program": [
+    {
+      "id": "1",
+      "name": "open-browser",
+      "paras": {
+        "browser_type": "chrome"
+      }
+    },
+    {
+      "id": "2",
+      "name": "open-url",
+      "paras": {
+        "url": "url to open"
+      }
+    },
+    {
+      "id": "3",
+      "name": "input-text",
+      "paras": {
+        "input_id": "id",
+        "text": "text to input"
+      }
+    },
+    {
+      "id": "4",
+      "name": "click-button",
+      "paras": {
+        "button_id": "id"
+      }
+    },
+    {
+      "id": "5",
+      "name": "close-browser",
+      "paras": {}
+    }
+  ]
+}
