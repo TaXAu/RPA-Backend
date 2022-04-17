@@ -56,7 +56,4 @@ def run_program_from_file(file_path):
 
 
 if __name__ == "__main__":
-    print("This is a module for parsing json files and running the steps in it.")
-    data = load_json("../test/sample.json")
-    program = load_program(data)
-    run_program(program)
+    run_program_from_file("../test/sample.json")
