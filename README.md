@@ -31,3 +31,12 @@ mkdocs build
 ```markdown
 ::: my_library.my_module.my_class
 ```
+
+#### 更新`requirements.txt`
+
+使用`pipreqs`工具：
+
+```bash
+# 切换到项目根目录执行
+pipreqs . --encoding=utf8
+```
