@@ -32,7 +32,7 @@ mkdocs build
 ::: my_library.my_module.my_class
 ```
 
-#### 更新`requirements.txt`
+### 更新`requirements.txt`
 
 使用`pipreqs`工具：
 
