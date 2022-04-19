@@ -33,21 +33,23 @@ def init_opera(headless=False):
 
 def init_edge(headless=False):
     from webdriver_manager.microsoft import EdgeChromiumDriverManager
-    driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
+    driver = webdriver.Edge(service=Service(
+        EdgeChromiumDriverManager().install()))
     return driver
 
 
 def init_chromium(headless=False):
     from webdriver_manager.chrome import ChromeDriverManager
     from webdriver_manager.utils import ChromeType
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
+    driver = webdriver.Chrome(service=Service(
+        ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
     return driver
 
 
 # end init browser
 
 
-class RpaBrowser:
+class Browser:
     # All supported browsers
     browsers = {'chrome': init_chrome,
                 'firefox': init_firefox,
@@ -70,12 +72,12 @@ class RpaBrowser:
 
     def __del__(self):
         try:
-            self.__driver.close()
+            self.__driver().close()
         except AttributeError:
             pass
 
-    def if_support(browser_type):
-        if browser_type in RpaBrowser.browsers:
+    def if_support(self, browser_type):
+        if browser_type in Browser.browsers:
             return True
         else:
             return False
@@ -84,14 +86,14 @@ class RpaBrowser:
         try:
             return self.driver
         except AttributeError:
-            if len(RpaBrowser.instance)>0:
-                return RpaBrowser.instance[0].driver
+            if len(Browser.instance) > 0:
+                return Browser.instance[0].driver
             else:
                 raise Exception("No browser instance")
 
-    def new_instance(self, browser_type = "edge", headless = False, **kwargs):
-        if RpaBrowser.if_support(browser_type):
-            RpaBrowser(browser_type = browser_type, headless = headless, **kwargs)
+    def new_instance(self, browser_type="edge", headless=False, **kwargs):
+        if Browser().if_support(browser_type):
+            Browser(browser_type=browser_type, headless=headless, **kwargs)
         else:
             raise Exception("Browser type not supported")
 
@@ -128,19 +130,21 @@ class RpaBrowser:
         el.click()
 
 
-web_functions = {"open_browser": RpaBrowser,
-                 "open_url": RpaBrowser.url,
-                 "input_text": RpaBrowser.input,
-                 "click_button": RpaBrowser.click,
-                 "close_browser": RpaBrowser.close}
+web_functions = {"open_browser": Browser,
+                 "open_url": Browser.url,
+                 "input_text": Browser.input,
+                 "click_button": Browser.click,
+                 "close_browser": Browser.close}
 
 # Easy mode of web automation
 # Which means there is only one global browser instance
 
-easy_browser = RpaBrowser()
+easy_browser = Browser()
+
 
 def delay(seconds, **kwargs):
     time.sleep(int(seconds))
+
 
 web_functions_easy = {
     "open_browser": easy_browser.new_instance,
