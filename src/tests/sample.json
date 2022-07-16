@@ -1,4 +1,6 @@
 {
+  "id": "id",
+  "name": "sample program",
   "program": [
     {
       "id": "1",
