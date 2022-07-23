@@ -1,0 +1,148 @@
+{
+  "name": "Personal Website Test",
+  "program": [
+    {
+      "id": "1",
+      "name": "open_browser",
+      "paras": {
+        "browser_type": "edge"
+      }
+    },
+    {
+      "name": "delay",
+      "paras": {
+        "seconds": "1"
+      }
+    },
+    {
+      "id": "2",
+      "name": "open_url",
+      "paras": {
+        "url": "https://rpa.t.fi-if.top"
+      }
+    },
+    {
+      "name": "delay",
+      "paras": {
+        "seconds": "1"
+      }
+    },
+    {
+      "id": "3",
+      "name": "click_button",
+      "paras": {
+        "type": "xpath",
+        "selector": "//a[normalize-space()='Test1']"
+      }
+    },
+    {
+      "name": "delay",
+      "paras": {
+        "seconds": "2"
+      }
+    },
+    {
+      "id": "4",
+      "name": "input_text",
+      "paras": {
+        "type": "xpath",
+        "selector": "//div[@class='el-input']//input[@type='text']",
+        "text": "activity name"
+      }
+    },
+    {
+      "id": "5",
+      "name": "click_button",
+      "paras": {
+        "type": "xpath",
+        "selector": "//input[@placeholder='please select your zone']"
+      }
+    },
+    {
+      "id": "6",
+      "name": "click_button",
+      "paras": {
+        "type": "css",
+        "selector": ".el-scrollbar__view.el-select-dropdown__list>li:nth-child(2)"
+      }
+    },
+    {
+      "id": "7",
+      "name": "input_text",
+      "paras": {
+        "type": "xpath",
+        "selector": "//input[@placeholder='Pick a date']",
+        "text": "2020-01-01"
+      }
+    },
+    {
+      "id": "8",
+      "name": "input_text",
+      "paras": {
+        "type": "xpath",
+        "selector": "//input[@placeholder='Pick a time']",
+        "text": "20:20:20"
+      }
+    },
+    {
+      "id": "9",
+      "name": "click_button",
+      "paras": {
+        "type": "xpath",
+        "selector": "//div[@class='el-switch__action']"
+      }
+    },
+    {
+      "id": "10",
+      "name": "click_button",
+      "paras": {
+        "type": "xpath",
+        "selector": "//span[normalize-space()='Promotion activities']"
+      }
+    },
+    {
+      "id": "11",
+      "name": "click_button",
+      "paras": {
+        "type": "xpath",
+        "selector": "//span[normalize-space()='Simple brand exposure']"
+      }
+    },
+    {
+      "id": "12",
+      "name": "click_button",
+      "paras": {
+        "type": "xpath",
+        "selector": "//span[normalize-space()='Sponsor']"
+      }
+    },
+    {
+      "id": "13",
+      "name": "input_text",
+      "paras": {
+        "type": "xpath",
+        "selector": "//textarea[@class='el-textarea__inner']",
+        "text": "test text! \nactivity 1"
+      }
+    },
+    {
+      "id": "14",
+      "name": "click_button",
+      "paras": {
+        "type": "xpath",
+        "selector": "//button[@class='el-button el-button--primary']"
+      }
+    },
+    {
+      "name": "delay",
+      "paras": {
+        "seconds": "5"
+      }
+    },
+    {
+      "id": "15",
+      "name": "close_browser",
+      "paras": {}
+    }
+  ]
+}
