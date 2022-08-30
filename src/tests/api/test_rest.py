@@ -1,8 +1,6 @@
 import json
-
 from fastapi.testclient import TestClient
-
-from src.api.rest import ProgramModel
+from src.types import ProgramModel
 from src.api.rest import app
 
 client = TestClient(app)

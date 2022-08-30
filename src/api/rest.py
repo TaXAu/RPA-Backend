@@ -1,20 +1,7 @@
-from typing import List,Dict
 from fastapi import FastAPI
-from pydantic import BaseModel
+from src.types import ProgramModel
 
 app = FastAPI()
-
-
-class ActionModel(BaseModel):
-    name: str
-    id: str
-    paras: Dict
-
-
-class ProgramModel(BaseModel):
-    name: str
-    id: str
-    program: List[ActionModel]
 
 
 @app.get("/test")
@@ -35,6 +22,3 @@ async def get_all_program_id():
 @app.get("/api/status/{program_id}")
 async def get_program_status(program_id: str):
     return {"program_id": program_id}
-
-
-
