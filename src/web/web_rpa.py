@@ -9,40 +9,46 @@ import time
 
 def init_chrome(headless=False):
     from webdriver_manager.chrome import ChromeDriverManager
+
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     return driver
 
 
 def init_firefox(headless=False):
     from webdriver_manager.firefox import GeckoDriverManager
+
     driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
     return driver
 
 
 def init_ie(headless=False):
     from webdriver_manager.microsoft import IEDriverManager
+
     driver = webdriver.Ie(service=Service(IEDriverManager().install()))
     return driver
 
 
 def init_opera(headless=False):
     from webdriver_manager.opera import OperaDriverManager
+
     driver = webdriver.Opera(executable_path=OperaDriverManager().install())
     return driver
 
 
 def init_edge(headless=False):
     from webdriver_manager.microsoft import EdgeChromiumDriverManager
-    driver = webdriver.Edge(service=Service(
-        EdgeChromiumDriverManager().install()))
+
+    driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()))
     return driver
 
 
 def init_chromium(headless=False):
     from webdriver_manager.chrome import ChromeDriverManager
     from webdriver_manager.utils import ChromeType
-    driver = webdriver.Chrome(service=Service(
-        ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()))
+
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install())
+    )
     return driver
 
 
@@ -51,12 +57,14 @@ def init_chromium(headless=False):
 
 class Browser:
     # All supported browsers
-    browsers = {'chrome': init_chrome,
-                'firefox': init_firefox,
-                'ie': init_ie,
-                'opera': init_opera,
-                'edge': init_edge,
-                'chromium': init_chromium}
+    browsers = {
+        "chrome": init_chrome,
+        "firefox": init_firefox,
+        "ie": init_ie,
+        "opera": init_opera,
+        "edge": init_edge,
+        "chromium": init_chromium,
+    }
     instance = []  # list of browser instances
 
     def __init__(self, **kwargs):
@@ -106,18 +114,18 @@ class Browser:
     def select(self, type, selector, **kwargs):
         el = None
 
-        if type == 'id':
+        if type == "id":
             el = self.__driver().find_element(By.ID, selector)
-        elif type == 'xpath':
+        elif type == "xpath":
             el = self.__driver().find_element(By.XPATH, selector)
-        elif type == 'css':
+        elif type == "css":
             el = self.__driver().find_element(By.CSS_SELECTOR, selector)
-        elif type == 'name':
+        elif type == "name":
             el = self.__driver().find_element(By.NAME, selector)
-        elif type == 'class':
+        elif type == "class":
             el = self.__driver().find_element(By.CLASS_NAME, selector)
         else:
-            raise Exception('Selector type not supported')
+            raise Exception("Selector type not supported")
 
         return el
 
@@ -130,11 +138,13 @@ class Browser:
         el.click()
 
 
-web_functions = {"open_browser": Browser,
-                 "open_url": Browser.url,
-                 "input_text": Browser.input,
-                 "click_button": Browser.click,
-                 "close_browser": Browser.close}
+web_functions = {
+    "open_browser": Browser,
+    "open_url": Browser.url,
+    "input_text": Browser.input,
+    "click_button": Browser.click,
+    "close_browser": Browser.close,
+}
 
 # Easy mode of web automation
 # Which means there is only one global browser instance
@@ -152,5 +162,5 @@ web_functions_easy = {
     "input_text": easy_browser.input,
     "click_button": easy_browser.click,
     "close_browser": easy_browser.close,
-    "delay": delay
+    "delay": delay,
 }

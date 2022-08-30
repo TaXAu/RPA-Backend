@@ -31,6 +31,7 @@ def run_program(program):
         if func_name in all_functions:
             all_functions[func_name](**func_args)
 
+
 def run_program_from_file(file_path):
     """
     Runs a program from a json file.
@@ -39,6 +40,7 @@ def run_program_from_file(file_path):
     print("[Program loaded]", json_data["name"])
     program = load_program(json_data)
     run_program(program)
+
 
 # class RpaProgram:
 #     def __init__(self):
