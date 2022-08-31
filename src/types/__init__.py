@@ -1,2 +1,4 @@
 from .task import ActionModel
-from .task import ProgramModel
+from .task import TaskModel
+
+__all__ = [ActionModel, TaskModel]

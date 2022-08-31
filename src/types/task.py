@@ -8,7 +8,7 @@ class ActionModel(BaseModel):
     paras: Dict
 
 
-class ProgramModel(BaseModel):
+class TaskModel(BaseModel):
     name: str
     id: str
     program: List[ActionModel]

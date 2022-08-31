@@ -1,6 +1,6 @@
 import json
 from fastapi.testclient import TestClient
-from src.types import ProgramModel
+from src.types import TaskModel
 from src.api.rest import app
 
 client = TestClient(app)
@@ -14,7 +14,7 @@ def test_read_main():
 
 def test_program_model():
     @app.post("/test/program")
-    async def get_program_model(program: ProgramModel):
+    async def get_program_model(program: TaskModel):
         return program
 
     with open("src/tests/sample.json", "r") as f:

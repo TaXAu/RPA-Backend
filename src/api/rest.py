@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.types import ProgramModel
+from src.types import TaskModel
 
 app = FastAPI()
 
@@ -10,7 +10,7 @@ async def test():
 
 
 @app.post("/api/program")
-async def exec_program(program: ProgramModel):
+async def exec_program(program: TaskModel):
     return program
 
 
