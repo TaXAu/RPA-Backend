@@ -57,10 +57,9 @@ class TaskQueue(object):
     def __init__(self):
         self._tasks: List[Task] = []
 
-    def __find_task(self, id: str) -> Optional[Task]:
-        _id = TaskID(id)
+    def __find_task(self, id: TaskID) -> Optional[Task]:
         for task in self._tasks:
-            if task.id == _id:
+            if task.id == id:
                 return task
         return None
 
@@ -76,7 +75,7 @@ class TaskQueue(object):
         self._tasks.append(Task(program))
         return True
 
-    def exec(self, id: str) -> bool:
+    def exec(self, id: TaskID) -> bool:
         task = self.__find_task(id)
         if task is None:
             return False
@@ -86,7 +85,7 @@ class TaskQueue(object):
         else:
             return False
 
-    def stop(self, id: str) -> bool:
+    def stop(self, id: TaskID) -> bool:
         task = self.__find_task(id)
         if task is None:
             return False
@@ -96,14 +95,14 @@ class TaskQueue(object):
         else:
             return False
 
-    def status(self, id: str) -> Optional[TaskStatus]:
+    def status(self, id: TaskID) -> Optional[TaskStatus]:
         task = self.__find_task(id)
         if task is None:
             return None
         else:
             return task.status
 
-    def remove(self, id: str) -> bool:
+    def remove(self, id: TaskID) -> bool:
         task = self.__find_task(id)
         if task is None:
             return False
