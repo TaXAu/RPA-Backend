@@ -13,20 +13,20 @@ async def add_task(task: TaskModel) -> bool:
 
 
 @app.get("/api/tasks/info", response_model=Optional[List[TaskModel]])
-async def get_task_info(id: Optional[str] = None) -> Optional[List[TaskModel]]:
+async def get_task_info(id: Optional[TaskID] = None) -> Optional[List[TaskModel]]:
     if id is None:
         return tasks.task_info
-    elif id is str:
+    elif id is TaskID:
         return list(filter(lambda item: item.id == id, tasks.task_info))
     else:
         return None
 
 
 @app.get("/api/tasks/status", response_model=Optional[List[Tuple[TaskID, TaskStatus]]])
-async def get_task_status(id: str) -> Optional[List[Tuple[TaskID, TaskStatus]]]:
+async def get_task_status(id: TaskID) -> Optional[List[Tuple[TaskID, TaskStatus]]]:
     if id is None:
         return tasks.task_status
-    elif id is str:
+    elif id is TaskID:
         return list(filter(lambda item: item[0] == id, tasks.task_status))
     else:
         return None
