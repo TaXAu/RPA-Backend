@@ -55,6 +55,13 @@ def init_chromium(headless=False):
 # end init browser
 
 
+def if_support(browser_type):
+    if browser_type in Browser.browsers:
+        return True
+    else:
+        return False
+
+
 class Browser:
     # All supported browsers
     browsers = {
@@ -84,12 +91,6 @@ class Browser:
         except AttributeError:
             pass
 
-    def if_support(self, browser_type):
-        if browser_type in Browser.browsers:
-            return True
-        else:
-            return False
-
     def __driver(self):
         try:
             return self.driver
@@ -100,7 +101,7 @@ class Browser:
                 raise Exception("No browser instance")
 
     def new_instance(self, browser_type="edge", headless=False, **kwargs):
-        if Browser().if_support(browser_type):
+        if if_support(browser_type):
             Browser(browser_type=browser_type, headless=headless, **kwargs)
         else:
             raise Exception("Browser type not supported")
