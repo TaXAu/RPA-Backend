@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "rpa-backend"
+version = "0.1.0"
+description = "TaXAu RPA Backend."
+authors = ["sperjar <65524316+sperjar@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "rpa_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = {extras = ["all"], version = "^0.81.0"}
+
+
+[build-system]
+requires = ["setuptools>=42", "wheel", "nuitka", "toml"]
+build-backend = "nuitka.distutils.Build"
+
+[nuitka]
+# These are not recommended, but they make it obvious to have effect.
+
+# boolean option, e.g. if you cared for C compilation commands, leading
+# dashes are omitted
+show-scons = true
+
+# options with several values, e.g. avoiding including modules, accepts
+# list argument.
+nofollow-import-to = ["*.tests", "*.distutils"]
