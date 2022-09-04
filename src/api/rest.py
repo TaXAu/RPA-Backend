@@ -1,24 +1,32 @@
+from typing import List, Optional, Tuple
 from fastapi import FastAPI
-from src.types import TaskModel
+from src.types import TaskModel, TaskID, TaskStatus
+from src.task import TaskQueue
 
 app = FastAPI()
+tasks = TaskQueue()
 
 
-@app.get("/test")
-async def test():
-    return {"message": "Hello World"}
+@app.post("/api/tasks/add", response_model=bool)
+async def add_task(task: TaskModel) -> bool:
+    return tasks.add(task)
 
 
-@app.post("/api/program")
-async def exec_program(program: TaskModel):
-    return program
+@app.get("/api/tasks/info", response_model=Optional[List[TaskModel]])
+async def get_task_info(id: Optional[str] = None) -> Optional[List[TaskModel]]:
+    if id is None:
+        return tasks.task_info
+    elif id is str:
+        return list(filter(lambda item: item.id == id, tasks.task_info))
+    else:
+        return None
 
 
-@app.get("api/program/id")
-async def get_all_program_id():
-    return {"message": "Hello World"}
-
-
-@app.get("/api/status/{program_id}")
-async def get_program_status(program_id: str):
-    return {"program_id": program_id}
+@app.get("/api/tasks/status", response_model=Optional[List[Tuple[TaskID, TaskStatus]]])
+async def get_task_status(id: str) -> Optional[List[Tuple[TaskID, TaskStatus]]]:
+    if id is None:
+        return tasks.task_status
+    elif id is str:
+        return list(filter(lambda item: item[0] == id, tasks.task_status))
+    else:
+        return None

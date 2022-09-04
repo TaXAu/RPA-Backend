@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Tuple
 from multiprocessing import Process
 from src.types import TaskModel
 from src.types import TaskStatus
@@ -63,6 +63,14 @@ class TaskQueue(object):
             if task.id == _id:
                 return task
         return None
+
+    @property
+    def task_info(self) -> List[TaskModel]:
+        return list(map(lambda task: task.info, self._tasks))
+
+    @property
+    def task_status(self) -> List[Tuple[TaskID, TaskStatus]]:
+        return list(map(lambda task: (task.id, task.status), self._tasks))
 
     def add(self, program: TaskModel) -> bool:
         self._tasks.append(Task(program))

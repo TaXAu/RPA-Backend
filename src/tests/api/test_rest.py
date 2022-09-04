@@ -1,24 +1,17 @@
-import json
 from fastapi.testclient import TestClient
-from src.types import TaskModel
-from src.api.rest import app
+from src.api.rest import app, tasks
 
 client = TestClient(app)
 
 
-def test_read_main():
-    response = client.get("/test")
+def test_add_task():
+    response = client.post(
+        "/api/tasks/add",
+        json={"name": "test-add-task", "id": "test-add-task", "program": []},
+    )
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello World"}
-
-
-def test_program_model():
-    @app.post("/test/program")
-    async def get_program_model(program: TaskModel):
-        return program
-
-    with open("src/tests/sample.json", "r") as f:
-        data = json.load(f)
-    response = client.post("/test/program", json=data)
-    assert response.status_code == 200
-    assert response.json() == data
+    assert response.json() is True
+    assert len(tasks.task_info) == 1
+    assert tasks.task_info[0].name == "test-add-task"
+    assert tasks.task_info[0].id == "test-add-task"
+    assert tasks.task_info[0].program == []
