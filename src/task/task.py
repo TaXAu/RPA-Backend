@@ -7,8 +7,6 @@ from src.parser import Parser
 
 
 class Task(object):
-    _all_process = []
-
     def __init__(self, task_info: Optional[TaskModel] = None):
         self._task_process = None
         self.info: Optional[TaskModel] = task_info
@@ -45,7 +43,6 @@ class Task(object):
         """Execute the task thread."""
         if self.status == TaskStatus.READY:
             self._task_process = Process(target=self.__child_process_entry)
-            self._all_process.append(self._task_process)
             self._task_process.start()
 
     def stop(self):
