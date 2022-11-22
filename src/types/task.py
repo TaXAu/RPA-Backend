@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import List, Dict, NewType
-import enum
+from enum import Enum
 
 
 class ActionModel(BaseModel):
@@ -18,11 +18,11 @@ class TaskModel(BaseModel):
     program: List[ActionModel]
 
 
-class TaskStatus(enum.Enum):
-    INITIAL = ("initial",)
-    INIT_ERROR = ("init_error",)
-    READY = ("ready",)
-    RUNNING = ("running",)
-    PENDING = ("pending",)
-    SUCCESS = ("success",)
-    FAILED = ("failed",)
+class TaskStatus(Enum):
+    INITIAL = 0
+    INIT_ERROR = 1
+    READY = 2
+    RUNNING = 3
+    PENDING = 4
+    SUCCESS = 5
+    FAILED = 6
