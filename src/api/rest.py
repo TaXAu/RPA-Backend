@@ -1,10 +1,27 @@
 from typing import List, Optional, Tuple
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from src.types import TaskModel, TaskID, TaskStatus
-from src.task import TaskQueue
+from src.api import tasks
 
 app = FastAPI()
-tasks = TaskQueue()
+
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    return """
+    <html><lang="en">
+    <head><style>
+    h1 {
+    margin: 4em;
+    text-align: center;
+    }
+    </style></head>
+    <body>
+        <h1>TaXAu RPA is Running</h1>
+    </body>
+    </html>
+    """
 
 
 @app.post("/api/tasks/add", response_model=bool)
