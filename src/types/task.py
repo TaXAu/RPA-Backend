@@ -1,20 +1,20 @@
 from pydantic import BaseModel
-from typing import List, Dict, NewType
+from typing import List, Dict, NewType, Any
 from enum import Enum
 
 
 class ActionModel(BaseModel):
-    name: str
     id: str
-    paras: Dict
+    name: str
+    paras: Dict[str, Any]
 
 
 TaskID = NewType("TaskID", str)
 
 
 class TaskModel(BaseModel):
-    name: str
     id: TaskID
+    name: str
     program: List[ActionModel]
 
 
