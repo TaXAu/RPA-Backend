@@ -6,7 +6,7 @@ from enum import Enum
 class ActionModel(BaseModel):
     id: str
     name: str
-    paras: Dict[str, Any]
+    param: Dict[str, Any]
 
 
 TaskID = NewType("TaskID", str)

@@ -10,4 +10,4 @@ class ModuleResultCode(enum.Enum):
 
 class ModuleResult(BaseModel):
     code: ModuleResultCode
-    result: Optional[Dict[str, Any]]
+    vars: Optional[Dict[str, Any]]

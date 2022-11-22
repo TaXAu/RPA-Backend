@@ -6,4 +6,4 @@ def test_hello_module():
     module = modules["hello"]()
     result = module.run()
     assert result.code == ModuleResultCode.SUCCESS
-    assert result.result == {"log": "Hello World!"}
+    assert result.vars == {"log": "Hello World!"}
