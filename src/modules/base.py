@@ -1,3 +1,4 @@
+import logging
 from src.types.module import ModuleResult
 from typing import Dict, Optional, Any
 
@@ -17,11 +18,19 @@ class BaseModule(object):
     input: Optional[Dict[str, Any]] = None
     output: Optional[Dict[str, Any]] = None
 
-    def __init__(self, config: Optional[Dict[str, str]] = None) -> None:
+    def __init__(
+        self,
+        config: Optional[Dict[str, str]] = None,
+        param: Optional[Dict[str, str]] = None,
+    ) -> None:
         """
         :param config: The module's configuration.
         """
         self.config = config
+        self.param = param
+        logging.debug(f"Module {self.id} initialized.")
+        logging.debug(f"Module {self.id} configuration: {self.config}")
+        logging.debug(f"Module {self.id} parameters: {self.param}")
 
     def run(self) -> ModuleResult:
         """

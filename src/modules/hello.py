@@ -9,6 +9,4 @@ class HelloModule(BaseModule):
 
     def run(self):
         print("Hello World!")
-        return ModuleResult(
-            code=ModuleResultCode.SUCCESS, result={"log": "Hello World!"}
-        )
+        return ModuleResult(code=ModuleResultCode.SUCCESS, vars={"log": "Hello World!"})
