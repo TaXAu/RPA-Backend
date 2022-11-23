@@ -5,6 +5,7 @@ __all__ = [
     "TaskID",
     "ModuleResultCode",
     "ModuleResult",
+    "ModuleInfo",
 ]
 
 from .task import ActionModel
@@ -13,3 +14,4 @@ from .task import TaskStatus
 from .task import TaskID
 from .module import ModuleResultCode
 from .module import ModuleResult
+from .module import ModuleInfo

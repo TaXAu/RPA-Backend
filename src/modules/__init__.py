@@ -1,9 +1,10 @@
-__all__ = ["BaseModule", "modules"]
-
-from src.modules.base import BaseModule
+from typing import List
 import importlib
 import inspect
 import os
+from src.modules.base import BaseModule
+
+from src.types import ModuleInfo
 
 
 def get_modules(path):
@@ -29,3 +30,9 @@ for module in get_modules(os.path.dirname(__file__)):
         if issubclass(cls, BaseModule):
             if cls.id != "base_module" and cls.id not in modules:
                 modules[cls.id] = cls
+
+modules_info: List[ModuleInfo] = []
+for _, module in modules.items():
+    modules_info.append(ModuleInfo(**module.__dict__))
+
+__all__ = ["BaseModule", "modules", "modules_info"]
