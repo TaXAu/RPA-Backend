@@ -4,6 +4,7 @@ from src.types import TaskStatus
 from src.types import TaskID
 from src.parser import Parser
 from threading import Thread
+from typing import Dict
 import logging
 
 
@@ -50,6 +51,7 @@ class Task(object):
         Execute one step of the task.
         """
         if self.status == TaskStatus.READY:
+            self.status = TaskStatus.RUNNING
             logging.info(f"Task {self.info.id} started.")
             while (
                 self.status != TaskStatus.SUCCESS and self.status != TaskStatus.FAILED
@@ -80,7 +82,7 @@ class Task(object):
     def run(self):
         """Execute the task."""
         self.thread = Thread(target=self._thread_entry)
-        self.thread.run()
+        self.thread.start()
 
     def stop(self):
         """Stop the task."""
@@ -89,67 +91,58 @@ class Task(object):
 
 class TaskQueue(object):
     def __init__(self):
-        self._tasks: List[Task] = []
+        self._tasks: Dict[TaskID, Task] = {}
 
-    def _find_task(self, id: TaskID) -> Optional[Task]:
-        for task in self._tasks:
-            if task.info.id == id:
-                return task
-        return None
+    # def _find_task(self, id: TaskID) -> Optional[Task]:
+    #     for task in self._tasks:
+    #         if task.info.id == id:
+    #             return task
+    #     return None
 
     @property
     def task_info(self) -> List[TaskModel]:
-        return list(map(lambda task: task.info, self._tasks))
+        return [task.info for _, task in self._tasks.items()]
 
     @property
     def task_status(self) -> List[Tuple[TaskID, TaskStatus]]:
-        return list(map(lambda task: (task.id, task.status), self._tasks))
+        return [(task.info.id, task.status) for _, task in self._tasks.items()]
 
     def add(self, program: TaskModel) -> bool:
-        self._tasks.append(Task(program))
-        return True
-
-    def exec(self, id: TaskID) -> bool:
-        task = self._find_task(id)
-        if task is None:
+        if program.id in self._tasks:
             return False
-        elif task.status == TaskStatus.READY:
-            task.run()
+        else:
+            self._tasks[program.id] = Task(program)
+            return True
+
+    def run(self, id: TaskID) -> bool:
+        if id not in self._tasks:
+            return False
+        elif self._tasks[id].status == TaskStatus.READY:
+            self._tasks[id].run()
             return True
         else:
             return False
 
     def stop(self, id: TaskID) -> bool:
-        task = self._find_task(id)
-        if task is None:
+        if id not in self._tasks:
             return False
-        elif task.is_started():
-            task.stop()
+        elif self._tasks[id].is_started():
+            self._tasks[id].stop()
             return True
         else:
             return False
 
     def status(self, id: TaskID) -> Optional[TaskStatus]:
-        task = self._find_task(id)
-        if task is None:
+        if id not in self._tasks:
             return None
         else:
-            return task.status
+            return self._tasks[id].status
 
     def remove(self, id: TaskID) -> bool:
-        task = self._find_task(id)
-        if task is None:
+        if id not in self._tasks:
             return False
-        elif task.is_started():
+        elif self._tasks[id].is_started():
             return False
         else:
-            self._tasks.remove(task)
+            del self._tasks[id]
             return True
-
-    def __del__(self):
-        """
-        manually terminate all the child processes
-        """
-        for task in self._tasks:
-            if task.is_started():
-                task.stop()
