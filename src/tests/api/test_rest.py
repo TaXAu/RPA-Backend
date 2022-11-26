@@ -43,7 +43,7 @@ def test_delay_hello_task():
     assert response.status_code == 200
     assert response.json() is True
 
-    sleep(1)
+    sleep(2)
 
     response = client.get("/api/tasks/status", params={"id": hello.id})
     assert response.status_code == 200

@@ -2,8 +2,7 @@ from typing import List
 import importlib
 import inspect
 import os
-from src.modules.base import BaseModule
-
+from src.modules.base import BaseModule, ModuleException, ModuleArgsException
 from src.types import ModuleInfo
 
 
@@ -35,4 +34,10 @@ modules_info: List[ModuleInfo] = []
 for _, module in modules.items():
     modules_info.append(ModuleInfo(**module.__dict__))
 
-__all__ = ["BaseModule", "modules", "modules_info"]
+__all__ = [
+    "BaseModule",
+    "modules",
+    "modules_info",
+    "ModuleException",
+    "ModuleArgsException",
+]
