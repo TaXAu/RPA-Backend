@@ -1,6 +1,6 @@
 import logging
 from src.types.module import ModuleResult
-from typing import Dict, Optional, Any
+from typing import Dict, Optional
 
 
 class BaseModule(object):
@@ -15,8 +15,8 @@ class BaseModule(object):
     name: str = "Base Module"
     description: str = "Base module for all modules."
     version: str = "0.1.0"
-    input: Optional[Dict[str, Any]] = None
-    output: Optional[Dict[str, Any]] = None
+    args: Dict[str, type] = {}
+    vars: Dict[str, type] = {}
 
     def __init__(
         self,
@@ -37,3 +37,15 @@ class BaseModule(object):
         Run the module.
         """
         raise NotImplementedError()
+
+
+class ModuleException(Exception):
+    """Base class for all module exceptions."""
+
+    pass
+
+
+class ModuleArgsException(ModuleException):
+    """Exception for module arguments."""
+
+    pass

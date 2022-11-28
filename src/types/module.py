@@ -11,3 +11,10 @@ class ModuleResultCode(enum.Enum):
 class ModuleResult(BaseModel):
     code: ModuleResultCode
     vars: Optional[Dict[str, Any]]
+
+
+class ModuleInfo(BaseModel):
+    id: str
+    name: str
+    description: Optional[str]
+    version: str
