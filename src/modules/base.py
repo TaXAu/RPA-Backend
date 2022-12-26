@@ -39,7 +39,7 @@ class BaseModule(object):
 
     def get_args(self):
         """
-        Get the arguments of the module.
+        获取函数形参的类型标注，不包括 self，未进行标注的处理为 Any
         """
         args = inspect.getfullargspec(self.run).args
         annotations = inspect.getfullargspec(self.run).annotations
