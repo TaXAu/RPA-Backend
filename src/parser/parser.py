@@ -56,15 +56,20 @@ class Parser(object):
 
                     # judge task result
                     if result.code == ModuleResultCode.SUCCESS:
-                        self.vars.update(result.vars)
+                        rtns = result.rtns  # 返回值
+                        rtn_vars = step_info.rtns  # 返回值的变量名称，list 或 str
+                        if isinstance(rtn_vars, list):  # 如果给定了多个变量名，执行解构语法
+                            for i, var in enumerate(rtn_vars):
+                                if var == "_":
+                                    continue
+                                else:
+                                    self.vars[var] = rtns[i]  # 这里如果访问元素出错会直接捕获转任务失败
+                        elif isinstance(rtn_vars, str):  # 给定的是一个字符串，直接将变量赋值进该变量名
+                            self.vars[rtn_vars] = rtns
                         self.step += 1
                     else:
-                        logger.error(
-                            f"Module {step_info.id} failed "
-                            f"because of fail result '{result.vars}'."
-                        )
-                        ModuleException("Module failed.")
+                        raise ModuleException("Module failed.")
 
-            except ModuleException as e:
+            except Exception as e:
                 self.fail = True
-                raise e
+                logger.error(e)

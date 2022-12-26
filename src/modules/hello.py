@@ -1,6 +1,5 @@
 from typing import Union
 from src.modules.base import BaseModule
-from src.types import ModuleResult, ModuleResultCode
 from time import sleep
 
 
@@ -9,8 +8,8 @@ class HelloModule(BaseModule):
     name = "Hello World Module"
     version = "0.0.1"
 
-    def run(self):
-        return ModuleResult(code=ModuleResultCode.SUCCESS, vars={"log": "Hello World!"})
+    def run(self) -> str:
+        return "hello"
 
 
 class DelayHelloModule(BaseModule):
@@ -18,9 +17,9 @@ class DelayHelloModule(BaseModule):
     name = "Delay Hello World Module"
     version = "0.0.1"
 
-    def run(self):
+    def run(self) -> str:
         sleep(1)
-        return ModuleResult(code=ModuleResultCode.SUCCESS, vars={"log": "Hello World!"})
+        return "hello"
 
 
 class DelayNSecHelloModule(BaseModule):
@@ -28,7 +27,7 @@ class DelayNSecHelloModule(BaseModule):
     name = "Delay N Sec Hello World Module"
     version = "0.0.1"
 
-    def run(self, n: Union[int, float, str], msg: str = "Hello World!"):
+    def run(self, n: Union[int, float, str], msg: str = "Hello World!") -> str:
         n = float(n)
         sleep(n)
-        return ModuleResult(code=ModuleResultCode.SUCCESS, vars={"msg": msg})
+        return "hello"

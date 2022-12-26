@@ -9,7 +9,6 @@ def test_parser_hello():
     assert p.end
     assert not p.fail
     assert p.step == len(actions["hello"].program)
-    assert p.vars["log"] == "Hello World!"
 
 
 def test_n_hello_module():
@@ -19,4 +18,3 @@ def test_n_hello_module():
     assert p.end
     assert not p.fail
     assert p.step == len(actions["hello"].program)
-    assert p.vars["msg"] == actions["delay_n_sec_hello"].program[0].args["msg"]

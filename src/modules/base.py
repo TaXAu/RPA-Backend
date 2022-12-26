@@ -33,7 +33,12 @@ class BaseModule(object):
         Run the module.
         """
         try:
-            return self.run(**self.args)
+            if self.args is not None:
+                return ModuleResult(
+                    code=ModuleResultCode.SUCCESS, rtns=self.run(**self.args)
+                )
+            else:
+                return ModuleResult(code=ModuleResultCode.SUCCESS, rtns=self.run())
         except ModuleException:
             return ModuleResult(code=ModuleResultCode.FAIL)
 

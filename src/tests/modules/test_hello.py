@@ -4,6 +4,5 @@ from src.types import ModuleResultCode
 
 def test_hello_module():
     module = modules["hello"]()
-    result = module.run()
+    result = module.module_run()
     assert result.code == ModuleResultCode.SUCCESS
-    assert result.vars == {"log": "Hello World!"}
