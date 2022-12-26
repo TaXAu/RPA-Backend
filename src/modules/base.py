@@ -53,7 +53,7 @@ class BaseModule(object):
                 rtn[k] = Any
         return rtn
 
-    def get_rtn(self):
+    def get_rtns(self):
         """
         Get the return type of the module.
         """
