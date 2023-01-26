@@ -32,7 +32,16 @@ for module in get_modules(os.path.dirname(__file__)):
 
 modules_info: List[ModuleInfo] = []
 for _, module in modules.items():
-    modules_info.append(ModuleInfo(**module.__dict__))
+    modules_info.append(
+        ModuleInfo(
+            id=module.id,
+            name=module.name,
+            description=module.description,
+            version=module.version,
+            args={k: str(v) for k, v in module().get_args().items()},
+            rtns=str(module().get_rtns()),
+        )
+    )
 
 __all__ = [
     "BaseModule",

@@ -18,3 +18,5 @@ class ModuleInfo(BaseModel):
     name: str
     description: Optional[str]
     version: str
+    args: Any
+    rtns: Any
