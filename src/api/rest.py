@@ -26,6 +26,11 @@ async def root():
     """
 
 
+@app.get("/api/test", response_model=str)
+async def test():
+    return "rpa"
+
+
 @app.post("/api/tasks/add", response_model=bool)
 async def add_task(task: TaskModel) -> bool:
     logging.info(f"Add Task: {task}")
@@ -67,3 +72,9 @@ async def get_modules_list(
         return modules_info
     else:
         return list(filter(lambda item: item.id == module_id, modules_info))
+
+
+@app.get("/api/tasks/delete", response_model=bool)
+async def delete_task(id: TaskID) -> bool:
+    logging.info(f"Delete Task: {id}")
+    return tasks.remove(id)
