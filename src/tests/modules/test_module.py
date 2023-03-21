@@ -2,7 +2,7 @@ from src.modules import BaseModule
 from typing import Any
 
 
-class TestModule1(BaseModule):
+class Module1(BaseModule):
     def run(
         self, a: int, b: float, c: str, d: list, f
     ) -> tuple[int, float, str, list, Any]:
@@ -10,12 +10,12 @@ class TestModule1(BaseModule):
 
 
 def test_module_args():
-    module = TestModule1()
+    module = Module1()
     args = module.get_args()
     assert args == {"a": int, "b": float, "c": str, "d": list, "f": Any}
 
 
 def test_module_rtns():
-    module = TestModule1()
+    module = Module1()
     rtns = module.get_rtns()
     assert rtns == tuple[int, float, str, list, Any]
