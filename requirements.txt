@@ -1,6 +1,7 @@
 fastapi
 pydantic
 uvicorn
-
+pytest
+flake8
 pyautogui
 playwright
