@@ -1,6 +1,6 @@
-import logging
-from src.types.module import ModuleResult
-from typing import Dict, Optional
+import inspect
+from src.types.module import ModuleResult, ModuleResultCode
+from typing import Dict, Any, Optional
 
 
 class BaseModule(object):
@@ -15,28 +15,54 @@ class BaseModule(object):
     name: str = "Base Module"
     description: str = "Base module for all modules."
     version: str = "0.1.0"
-    args: Dict[str, type] = {}
-    vars: Dict[str, type] = {}
 
-    def __init__(
-        self,
-        config: Optional[Dict[str, str]] = None,
-        param: Optional[Dict[str, str]] = None,
-    ) -> None:
-        """
-        :param config: The module's configuration.
-        """
-        self.config = config
-        self.param = param
-        logging.debug(f"Module {self.id} initialized.")
-        logging.debug(f"Module {self.id} configuration: {self.config}")
-        logging.debug(f"Module {self.id} parameters: {self.param}")
+    def __init__(self, args: Optional[Dict[str, Any]] = None):
+        self.args = None
 
-    def run(self) -> ModuleResult:
+    def set_args(self, args: Optional[Dict[str, Any]] = None):
+        self.args = args
+
+    def run(self, **kwargs) -> ModuleResult:
         """
         Run the module.
         """
         raise NotImplementedError()
+
+    def module_run(self) -> ModuleResult:
+        """
+        Run the module.
+        """
+        try:
+            if self.args is not None:
+                return ModuleResult(
+                    code=ModuleResultCode.SUCCESS, rtns=self.run(**self.args)
+                )
+            else:
+                return ModuleResult(code=ModuleResultCode.SUCCESS, rtns=self.run())
+        except ModuleException:
+            return ModuleResult(code=ModuleResultCode.FAIL)
+
+    def get_args(self):
+        """
+        获取函数形参的类型标注，不包括 self，未进行标注的处理为 Any
+        """
+        args = inspect.getfullargspec(self.run).args
+        annotations = inspect.getfullargspec(self.run).annotations
+        rtn = {}
+        for k in args:
+            if k == "self":
+                continue
+            elif k in annotations:
+                rtn[k] = annotations[k]
+            else:
+                rtn[k] = Any
+        return rtn
+
+    def get_rtns(self):
+        """
+        Get the return type of the module.
+        """
+        return inspect.getfullargspec(self.run).annotations.get("return", Any)
 
 
 class ModuleException(Exception):

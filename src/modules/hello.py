@@ -1,5 +1,5 @@
-from src.modules.base import BaseModule, ModuleArgsException
-from src.types import ModuleResult, ModuleResultCode
+from typing import Union
+from src.modules.base import BaseModule
 from time import sleep
 
 
@@ -8,8 +8,8 @@ class HelloModule(BaseModule):
     name = "Hello World Module"
     version = "0.0.1"
 
-    def run(self):
-        return ModuleResult(code=ModuleResultCode.SUCCESS, vars={"log": "Hello World!"})
+    def run(self) -> str:
+        return "hello"
 
 
 class DelayHelloModule(BaseModule):
@@ -17,23 +17,17 @@ class DelayHelloModule(BaseModule):
     name = "Delay Hello World Module"
     version = "0.0.1"
 
-    def run(self):
+    def run(self) -> str:
         sleep(1)
-        return ModuleResult(code=ModuleResultCode.SUCCESS, vars={"log": "Hello World!"})
+        return "hello"
 
 
 class DelayNSecHelloModule(BaseModule):
     id = "delay_n_sec_hello"
     name = "Delay N Sec Hello World Module"
     version = "0.0.1"
-    args = {"n": float}
-    vars = {"log": str}
 
-    def run(self):
-        if "n" in self.args:
-            sleep(float(self.args["n"]))
-        else:
-            raise ModuleArgsException("Missing argument `n`.")
-        n = float(self.args["n"])
-        rtn = f"Hello World! (delayed {n} seconds)"
-        return ModuleResult(code=ModuleResultCode.SUCCESS, vars={"log": rtn})
+    def run(self, n: Union[int, float, str], msg: str = "Hello World!") -> str:
+        n = float(n)
+        sleep(n)
+        return "hello"

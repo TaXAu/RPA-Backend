@@ -1,12 +1,14 @@
 from pydantic import BaseModel
-from typing import List, Dict, NewType, Any
+from typing import List, Dict, NewType, Any, Optional, Union
 from enum import Enum
 
 
 class ActionModel(BaseModel):
     id: str
     name: str
-    param: Dict[str, Any]
+    param: Optional[Dict[str, Any]]
+    args: Optional[Dict[str, Any]]
+    rtns: Optional[Union[List[str], str]]
 
 
 TaskID = NewType("TaskID", str)

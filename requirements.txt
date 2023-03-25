@@ -1,0 +1,8 @@
+fastapi[all]
+pydantic
+uvicorn
+httpx
+pytest
+flake8
+pyautogui
+playwright

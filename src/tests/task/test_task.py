@@ -16,4 +16,3 @@ def test_task_hello():
     assert t.parser.end
     assert not t.parser.fail
     assert t.parser.step == len(task_info.program)
-    assert t.parser.vars["log"] == "Hello World!"

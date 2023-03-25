@@ -1,4 +1,4 @@
-from typing import Dict, Optional, Any
+from typing import Optional, Any
 import enum
 from pydantic import BaseModel
 
@@ -10,7 +10,7 @@ class ModuleResultCode(enum.Enum):
 
 class ModuleResult(BaseModel):
     code: ModuleResultCode
-    vars: Optional[Dict[str, Any]]
+    rtns: Any
 
 
 class ModuleInfo(BaseModel):
@@ -18,3 +18,5 @@ class ModuleInfo(BaseModel):
     name: str
     description: Optional[str]
     version: str
+    args: Any
+    rtns: Any
